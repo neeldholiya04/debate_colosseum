@@ -1,6 +1,8 @@
 import { StoredRun, RunStatus } from '@/types';
 
 const KEY = 'debate_colosseum_runs';
+// NOTE: This localStorage is now just a cache/fallback.
+// The actual source of truth is the Supabase DB via fetchUserRuns()
 
 export function getRuns(): StoredRun[] {
   if (typeof window === 'undefined') return [];
@@ -22,6 +24,11 @@ export function addRun(run: StoredRun): void {
   localStorage.setItem(KEY, JSON.stringify(runs.slice(0, 50)));
 }
 
+export function setRuns(runs: StoredRun[]): void {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem(KEY, JSON.stringify(runs.slice(0, 50)));
+}
+
 export function updateRunStatus(runId: string, status: RunStatus): void {
   const runs = getRuns();
   const run = runs.find(r => r.run_id === runId);
@@ -29,4 +36,9 @@ export function updateRunStatus(runId: string, status: RunStatus): void {
     run.status = status;
     localStorage.setItem(KEY, JSON.stringify(runs));
   }
+}
+
+export function deleteRun(runId: string): void {
+  const runs = getRuns().filter(r => r.run_id !== runId);
+  localStorage.setItem(KEY, JSON.stringify(runs));
 }
