@@ -85,6 +85,7 @@ jobs:
           FRONTEND_URL=${{ secrets.FRONTEND_URL }}
           SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          API_BASE_URL =${{ secrets.API_BASE_URL }}
           BACKEND_URL=${{ secrets.BACKEND_URL }}
           EOF
 
